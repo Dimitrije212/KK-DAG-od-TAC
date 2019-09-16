@@ -11,4 +11,4 @@ Za zadati ulazni troadresni kod program generise graf na dot (graphviz) jeziku, 
 **dot -Tpng test.dot -o test.png** - prevodjenje dot datoteke i generisanje slike u **.PNG** formatu <be>
   
 ### Literatura:
-Takodje u možete naći i *dotguide.pdf* koji sam koristio kao dodatni materijal kod graphviz-a
+Takodje možete naći i *dotguide.pdf* koji sam koristio kao dodatni materijal kod graphviz-a
