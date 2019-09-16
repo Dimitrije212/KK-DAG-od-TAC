@@ -1,0 +1,28 @@
+digraph b {
+node [shape=box]
+0 -> 1
+0 [label = "ENTRY"]
+1 [label = "i := 0
+"]
+1 -> 2
+2 [label = "L2:
+if i < 10 goto L5"]
+2 -> 4
+4 [label = "goto L7"]
+2 -> 5
+5 [label = "L5:
+t1 := y * z
+"]
+5 -> 7
+4 -> 7
+7 [label = "L7:
+t2 := x + t1
+"]
+7 -> 9
+9 [label = "L8:
+t3 := i + 5
+print t3
+"]
+9 -> 13
+13 [label = "EXIT"]
+}

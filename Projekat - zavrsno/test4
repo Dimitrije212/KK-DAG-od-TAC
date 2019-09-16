@@ -1,0 +1,10 @@
+a := 2
+b := a + 3
+i := 0
+L:
+b := b - a
+a := a + i
+i := i + 1
+if i < 10 goto L
+print a
+print b

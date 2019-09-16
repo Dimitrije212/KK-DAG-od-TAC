@@ -1,0 +1,12 @@
+if a < b goto Ltrue
+if c < d goto L1
+goto Lfalse
+L1:
+if e < f goto Ltrue
+goto Lfalse
+Ltrue:
+print a
+goto Lkraj
+Lfalse:
+print b
+Lkraj:

@@ -1,0 +1,22 @@
+c := 2
+f := 3
+g := 5
+if c < g goto L0
+goto L1
+L0:
+print 10
+goto L2
+L1:
+goto L0
+L2:
+print 0
+if c > 2 goto L0
+if g < 6 goto L3
+g := c + f
+print g
+if g < 5 goto L1
+print c
+goto L2
+L3:
+g := 2 * f
+print g

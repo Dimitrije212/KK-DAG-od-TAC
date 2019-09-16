@@ -1,0 +1,13 @@
+a := 2
+b := 5
+if a > 3 goto L1
+goto L2
+L1:
+print a
+goto L3
+L2:
+print b
+L3:
+if b > a goto L1
+L4:
+print a

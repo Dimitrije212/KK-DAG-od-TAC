@@ -1,0 +1,105 @@
+%{
+#include <iostream>
+#include "ast.hpp"
+#include <map>
+using namespace std;
+
+void yyerror(string s) {
+  cerr << s << endl;
+  exit(1);
+}
+extern int yylex();
+extern int br;
+extern int trenutni;
+extern bool prethodnoGoTo;
+%}
+
+%union {
+  int i;
+  string *s;
+  SynTree *t;
+}
+
+%token print_token if_token goto_token
+
+%token <s> id_token
+%token <i> num_token
+%type <t> S E
+%left '>' '<'
+%left '+' '-'
+%left '*' '/'
+%%
+P : P S {
+  if(br == 1) {
+    cout << br << " [label = \"";
+    trenutni = br;
+  }
+  $2->ispisi();
+  delete $2;
+}
+  |
+  ;
+S : id_token ':' '=' E '+' E {
+  $$ = new Saberi(*$1, $4, $6);
+  delete $1;
+}
+  | id_token ':' '=' E '-' E {
+    $$ = new Oduzmi(*$1, $4, $6);
+    delete $1;
+  }
+  | id_token ':' '=' E '*' E {
+    $$ = new Pomnozi(*$1, $4, $6);
+    delete $1;
+  }
+  | id_token ':' '=' E '/' E {
+    $$ = new Podeli(*$1, $4, $6);
+    delete $1;
+  }
+  | id_token ':' '=' E {
+    $$ = new Dodeli(*$1, $4);
+    delete $1;
+  }
+  | id_token ':' '=' '-' E {
+    $$ = new Negacija(*$1, $5);
+    delete $1;
+  }
+  | print_token E {
+    $$ = new Stampaj($2);
+  }
+  | id_token ':' {
+    $$ = new Labela(*$1);
+    delete $1;
+  }
+  | if_token E '>' E goto_token id_token {
+    $$ = new IfGtGoto($2,$4,*$6);
+    delete $6;
+  }
+  | if_token E '<' E goto_token id_token {
+    $$ = new IfLtGoto($2,$4,*$6);
+    delete $6;
+  }
+  | goto_token id_token {
+    $$ = new GoTo(*$2);
+    delete $2;
+  }
+  ;
+E : num_token {
+  $$ = new Broj($1);
+}
+  | id_token {
+    $$ = new Prom(*$1);
+    delete $1;
+  }
+  ;
+%%
+int main() {
+  cout << "digraph b {\nnode [shape=box]\n0 -> 1\n0 [label = \"ENTRY\"]" << endl;
+  yyparse();
+  if(!prethodnoGoTo)
+    cout << "\"]\n" << trenutni << " -> " << ++br << endl;
+  /* else */
+    cout << br << " [label = \"EXIT\"]";
+  cout << "\n}";
+
+  return 0;
+}

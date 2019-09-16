@@ -1,0 +1,11 @@
+i := 0
+L2:
+if i < 10 goto L5
+goto L7
+L5:
+t1 := y * z
+L7:
+t2 := x + t1
+L8:
+t3 := i + 5
+print t3
